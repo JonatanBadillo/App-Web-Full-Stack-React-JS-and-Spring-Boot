@@ -1,5 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
+import { NumericFormat } from 'react-number-format';
 
 export default function ListEmployees() {
 
@@ -36,12 +37,20 @@ export default function ListEmployees() {
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                <th scope="row">1</th>
-                <td>Mark</td>
-                <td>Otto</td>
-                <td>@mdo</td>
-                </tr>
+                {
+                    // Iterate employees array
+                    employees.map((employee,index) => (
+                        <tr key={index}>
+                        <th scope="row">{employee.idEmployee}</th>
+                        <td>{employee.name}</td>
+                        <td>{employee.department}</td>
+                        <td><NumericFormat value={employee.salary}displayType={'text'}
+                        thousandSeparator=',' prefix={'$'}
+                        decimalScale={2} fixedDecimalScale/>
+                        </td>
+                        </tr>
+                    ))
+                }
             </tbody>
         </table>
     </div>
