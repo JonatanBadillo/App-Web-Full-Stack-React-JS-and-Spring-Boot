@@ -1,7 +1,7 @@
 function App() {
   return (
-    <div>
-      <h1>Human Resources System</h1>
+    <div className="container text-center">
+      <h3>Human Resources System</h3>
     </div>
   );
 }
