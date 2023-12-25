@@ -1,6 +1,23 @@
-import React from 'react'
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
 
 export default function ListEmployees() {
+
+    const urlBase = "http://localhost:8080/hr-app/employees";
+
+    const[employees, setEmployees] = useState([]);
+
+    useEffect(() => {
+        loadEmployees();
+    },[]);
+
+    const loadEmployees = async() => {
+        const result = await axios.get(urlBase);
+        console.log("Result of load employees");
+        console.log(result.data)
+        setEmployees(result.data)
+    }
+
   return (
     <div className='container'>
         <div className='container text-center' style={{margin: "30px"}}>
