@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Navegation() {
   return (
@@ -16,7 +17,7 @@ export default function Navegation() {
                 <a className="nav-link active" aria-current="page" href="/">Home</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" href="/add">Add Employee</a>
+                <Link className="nav-link" to="/add">Add Employee</Link>
               </li>
             </ul>
           </div>

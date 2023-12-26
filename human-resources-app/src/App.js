@@ -1,4 +1,5 @@
 import { BrowserRouter , Route, Routes} from "react-router-dom"; 
+import AddEmployee from "./employees/AddEmployee";
 import ListEmployees from "./employees/ListEmployees";
 import Nav from "./template/Nav";
 
@@ -9,6 +10,7 @@ function App() {
         <Nav/>
         <Routes>
           <Route exact path='/' element={<ListEmployees/>}/>
+          <Route exact path="/add" element={<AddEmployee/>}/>
         </Routes>
       </BrowserRouter>
     </div>
