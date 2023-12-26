@@ -1,10 +1,15 @@
 import axios from 'axios';
-import React, { useState } from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 export default function EditEmployee() {
+    const urlBase = "http://localhost:8080/hr-app/employees";
+
+
 
     let navegation = useNavigate();
+
+    const {id} = useParams();
 
     const [employee, setEmployee] = useState({
         name:"",
@@ -13,6 +18,15 @@ export default function EditEmployee() {
     })
 
     const{name, department,salary} = employee
+
+    useEffect(()=>{
+        loadEmployee();
+    },[])
+
+    const loadEmployee = async () => {
+        const result = await axios.get(`${urlBase}/${id}`)
+        setEmployee(result.data);
+    }
 
     const onInputChange = (e) => {
         // spread operator
