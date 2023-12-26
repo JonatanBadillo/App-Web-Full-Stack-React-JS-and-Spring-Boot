@@ -35,10 +35,9 @@ export default function EditEmployee() {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const urlBase = "http://localhost:8080/hr-app/employees";
-        await axios.post(urlBase,employee);
+        await axios.put(`${urlBase}/${id}`,employee);
         // Redirect to home page
-        navegation('/')
+        navegation('/');
     }
 
   return (
