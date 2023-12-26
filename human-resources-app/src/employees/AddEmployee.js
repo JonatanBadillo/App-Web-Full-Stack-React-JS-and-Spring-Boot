@@ -1,23 +1,49 @@
-import React from 'react'
+import axios from 'axios';
+import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 export default function AddEmployee() {
+
+    let navegation = useNavigate();
+
+    const [employee, setEmployee] = useState({
+        name:"",
+        department:"",
+        salary:""
+    })
+
+    const{name, department,salary} = employee
+
+    const onInputChange = (e) => {
+        // spread operator
+        setEmployee({...employee, [e.target.name]: e.target.value})
+    }
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        const urlBase = "http://localhost:8080/hr-app/employees";
+        await axios.post(urlBase,employee);
+        // Redirect to home page
+        navegation('/')
+    }
+
   return (
     <div className='container'>
         <div className='container text-center' style={{margin: "30px"}}>
             <h3>Add Employee</h3>
         </div>
-        <form>
+        <form onSubmit={(e) => onSubmit(e)}>
             <div className="mb-3">
                 <label htmlFor="name" className="form-label">Name</label>
-                <input type="text" className="form-control" id="name" name='name' required={true}/>
+                <input type="text" className="form-control" id="name" name='name' required={true} value={name} onChange={(e) => onInputChange(e)}/>
             </div>
             <div className="mb-3">
                 <label htmlFor="department" className="form-label">Department</label>
-                <input type="text" className="form-control" id="department" name='department'/>
+                <input type="text" className="form-control" id="department" name='department' value={department} onChange={(e) => onInputChange(e)}/>
             </div>
             <div className="mb-3">
                 <label htmlFor="salary" className="form-label">Salary</label>
-                <input type="number" step="any" className="form-control" id="salary" name='salary'/>
+                <input type="number" step="any" className="form-control" id="salary" name='salary' value={salary} onChange={(e) => onInputChange(e)}/>
             </div>
 
             <div className='center'>
