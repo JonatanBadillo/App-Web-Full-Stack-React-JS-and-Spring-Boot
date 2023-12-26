@@ -1,13 +1,16 @@
 package jb.hr.controller;
 
+import jb.hr.exception.ResourseNotFoundException;
 import jb.hr.model.Employee;
 import jb.hr.service.EmployeeService;
 import jb.hr.service.IEmployeeService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.management.relation.RelationServiceNotRegisteredException;
 import java.util.List;
 
 @RestController
@@ -32,6 +35,14 @@ public class EmployeeController {
     public Employee addEmployee(@RequestBody Employee employee){
         logger.info("Employee to add: " + employee);
         return employeeService.saveEmployee(employee);
+    }
+
+    @GetMapping("/employees/{id}")
+    public ResponseEntity<Employee> obtainEmployeeById(@PathVariable Integer id){
+        Employee employee = employeeService.searchEmployeeById(id);
+        if(employee == null)
+            throw new ResourseNotFoundException("Couldn't find the id: " + id);
+        return ResponseEntity.ok(employee);
     }
 
 }
