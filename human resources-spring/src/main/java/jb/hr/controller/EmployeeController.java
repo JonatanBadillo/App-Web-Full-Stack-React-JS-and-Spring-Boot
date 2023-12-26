@@ -11,7 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.management.relation.RelationServiceNotRegisteredException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 //htpp://localhost:8080/hr-app/
@@ -55,5 +57,18 @@ public class EmployeeController {
         employee.setSalary(receivedEmployee.getSalary());
         employeeService.saveEmployee(employee);
         return ResponseEntity.ok(employee);
+    }
+
+    @DeleteMapping("/employees/{id}")
+    public ResponseEntity<Map<String,Boolean>>
+        deleteEmployee(@PathVariable Integer id){
+        Employee employee = employeeService.searchEmployeeById(id);
+        if(employee == null)
+            throw new ResourseNotFoundException("The received id doesn't exist: " + id);
+        employeeService.deleteEmployee(employee);
+        // Json {"Deleted" : "true"}
+        Map<String,Boolean> answer = new HashMap<>();
+        answer.put("deleted" , Boolean.TRUE);
+        return  ResponseEntity.ok(answer);
     }
 }
