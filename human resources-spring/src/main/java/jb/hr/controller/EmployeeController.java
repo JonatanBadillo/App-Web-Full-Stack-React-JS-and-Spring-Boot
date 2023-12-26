@@ -45,4 +45,15 @@ public class EmployeeController {
         return ResponseEntity.ok(employee);
     }
 
+    @PutMapping("/employees/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable Integer id, @RequestBody Employee receivedEmployee){
+        Employee employee = employeeService.searchEmployeeById(id);
+        if(employee == null)
+            throw new ResourseNotFoundException("The received id doesn't exist: " + id);
+        employee.setName(receivedEmployee.getName());
+        employee.setDepartment(receivedEmployee.getDepartment());
+        employee.setSalary(receivedEmployee.getSalary());
+        employeeService.saveEmployee(employee);
+        return ResponseEntity.ok(employee);
+    }
 }
